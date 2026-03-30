@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cynthia Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; background: #000; color: white; padding: 20px; }
+        textarea, button { width: 100%; margin-top: 10px; }
+        textarea { padding: 10px; height: 100px; border-radius: 8px; border: none; }
+        button { background: #7d4acb; color: white; padding: 10px; border: none; border-radius: 8px; font-size: 16px; }
+        .memory { background: #111; padding: 10px; border-radius: 6px; margin-top: 10px; }
+        .memory b { color: #9f7aea; }
+    </style>
+</head>
+<body>
+    <h2>🧠 Cynthia Architect Dashboard</h2>
+    <p>Describe what you want to build — Cynthia will code it and speak it back.</p>
+
+    <textarea id="user_input" placeholder="e.g. Make a page that shows a chart of mood swings"></textarea>
+    <button onclick="sendToCynthia()">Snatch & Speak</button>
+
+    <p id="result"></p>
+
+    <h3>🧬 Memory Log</h3>
+    <div id="memory_log">
+    {% for m in memory %}
+      <div class="memory">
+        <b>Input:</b> {{ m.input }}<br>
+        <b>Response:</b> {{ m.response }}<br>
+        <small>{{ m.timestamp }}</small>
+      </div>
+    {% endfor %}
+    </div>
+
+    <script>
+        const speak = (text) => {
+            try {
+                const utter = new SpeechSynthesisUtterance(text);
+                const voices = speechSynthesis.getVoices();
+                utter.voice = voices.find(v => v.name.includes("Female") || v.name.includes("Google")) || null;
+                utter.pitch = 1.2;
+                utter.rate = 1.05;
+                speechSynthesis.speak(utter);
+            } catch(e) {
+                console.log("Speech synthesis not available.");
+            }
+        };
+
+        const sendToCynthia = async () => {
+            const input = document.getElementById("user_input").value;
+            const res = await fetch("/generate_code", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ input }),
+            });
+            const data = await res.json();
+            document.getElementById("result").innerText = data.message + " → saved as " + data.filename;
+            speak(data.message);
+        };
+    </script>
+</body>
+</html>
