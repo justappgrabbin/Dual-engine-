@@ -1,16 +1,46 @@
-"""
-Quantum Human Design - Virtual Consciousness Engine
-"""
+from .graph import (
+    Placement,
+    build_edge_index,
+    build_adjacency_matrix,
+    build_awareness_masks,
+    build_node_features,
+    build_sun_encoding,
+    find_body_sun,
+    AWARENESS_SETS,
+    HEART_GATES,
+    MIND_GATES,
+    CHANNEL_EDGES,
+    PLANETS,
+    CENTERS,
+    GATE_TO_CENTER,
+)
 
-from .core import Placement, Stream, ChartSystem, CENTERS, AWARENESS_SYSTEMS, CONSCIOUSNESS_FIELDS
-from .features import QuantumFieldEncoder, create_intention_perturbation
-from .network import QuantumHDNet, QuantumFieldLoss, create_model
-from .consciousness import ConsciousnessState, ConsciousnessField, NineBodyConsciousness
+from .gnn import (
+    HumanDesignGNN,
+    GraphSAGELayer,
+    FiLMLayer,
+    AwarenessHead,
+    count_parameters,
+)
 
 __all__ = [
-    'Placement', 'Stream', 'ChartSystem',
-    'CENTERS', 'AWARENESS_SYSTEMS', 'CONSCIOUSNESS_FIELDS',
-    'QuantumFieldEncoder', 'create_intention_perturbation',
-    'QuantumHDNet', 'QuantumFieldLoss', 'create_model',
-    'ConsciousnessState', 'ConsciousnessField', 'NineBodyConsciousness'
+    "Placement",
+    "build_edge_index",
+    "build_adjacency_matrix", 
+    "build_awareness_masks",
+    "build_node_features",
+    "build_sun_encoding",
+    "find_body_sun",
+    "AWARENESS_SETS",
+    "HEART_GATES",
+    "MIND_GATES",
+    "CHANNEL_EDGES",
+    "PLANETS",
+    "CENTERS",
+    "GATE_TO_CENTER",
+    "HumanDesignGNN",
+    "GraphSAGELayer",
+    "FiLMLayer",
+    "AwarenessHead",
+    "count_parameters",
 ]
